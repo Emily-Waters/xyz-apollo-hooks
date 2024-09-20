@@ -1,15 +1,16 @@
+import chalk from "chalk";
 import * as fs from "fs";
 import * as path from "path";
-import { ObjectUtils, RegexUtils, StringUtils } from ".";
+import { ObjectUtils, RegexUtils, StringUtils } from "./index.js";
 
 export class GQLSchemaGenerator {
   private _inputFilePath: string;
   private _rawSchema: string;
-  private _queries: string;
-  private _mutations: string;
+  private _queries: string = "";
+  private _mutations: string = "";
   private _outPath: string;
 
-  schema: string;
+  public schema: string = "";
 
   constructor(inputFilePath: string, outPath: string) {
     this._inputFilePath = inputFilePath;
@@ -18,13 +19,17 @@ export class GQLSchemaGenerator {
   }
 
   public transformSchema() {
+    process.stdout.write(`${chalk.yellow("❯")} Transforming schema...`);
     this._queries = this.generateQueryies();
     this._mutations = this.generateMutations();
     this.schema = this._queries + this._mutations;
+    process.stdout.write(`\r${chalk.green("✔")} Transforming schema...\n`);
   }
 
   public saveSchema() {
+    process.stdout.write(`${chalk.yellow("❯")} Saving schema...`);
     fs.writeFileSync(path.join(this._outPath), this.schema);
+    process.stdout.write(`\r${chalk.green("✔")} Saving schema...\n`);
   }
 
   private getSchema() {
@@ -85,7 +90,7 @@ export class GQLSchemaGenerator {
 }
 
 export class OperationBuilder {
-  static formatOperations(_rawSchema, regex) {
+  static formatOperations(_rawSchema: string, regex: RegExp) {
     let operationSchema = (_rawSchema.match(regex) || [""])[0];
 
     const args = operationSchema.matchAll(RegexUtils.operationArgsRegex) || [];

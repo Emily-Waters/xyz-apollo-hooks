@@ -1,4 +1,4 @@
-import { RegexUtils, StringUtils } from ".";
+import { RegexUtils, StringUtils } from "./index";
 
 export class ObjectUtils {
   static convertTypeToObject(
