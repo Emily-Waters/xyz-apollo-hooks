@@ -1,7 +1,9 @@
 import chalk from "chalk";
 import * as fs from "fs";
 import * as path from "path";
-import { ObjectUtils, RegexUtils, StringUtils } from "./index.js";
+import { ObjectUtils } from "./object-utils";
+import { RegexUtils } from "./regex-utils";
+import { StringUtils } from "./string-utils";
 
 export class GQLSchemaGenerator {
   private _inputFilePath: string;

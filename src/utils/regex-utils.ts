@@ -1,4 +1,4 @@
-import { StringUtils } from "./index";
+import { StringUtils } from "./string-utils";
 
 export class RegexUtils {
   static querySchemaRegex = /type Query {([^}]*)}/gi;
