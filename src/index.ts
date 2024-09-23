@@ -1,36 +1,26 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
+import { ReactApolloRawPluginConfig } from "@graphql-codegen/typescript-react-apollo/typings/config";
 import * as path from "path";
 import { cwd } from "process";
 
 export type XYZCodegenOptions = {
   outDir: string;
   graphqlEndpoint: string;
-  config?: {
-    maybeValue?: string;
-    withHooks?: boolean;
-    withRefetchFn?: boolean;
-  };
-};
+  config?: ReactApolloRawPluginConfig;
+} & Omit<CodegenConfig, "schema" | "config" | "generates">;
 
 export function defineConfig({
   outDir,
   graphqlEndpoint,
-  config: {
-    maybeValue = "T | undefined",
-    withHooks = true,
-    withRefetchFn = true,
-  } = {
-    maybeValue: "T | undefined",
-    withHooks: true,
-    withRefetchFn: true,
-  },
+  documents,
+  config,
+  ...rest
 }: XYZCodegenOptions) {
   const outPath = path.join(cwd(), outDir);
   const schemaPath = path.join(outPath, "schema.gql");
   const hooksPath = path.join(outPath, "index.ts");
 
   const pullSchema: CodegenConfig = {
-    overwrite: true,
     schema: graphqlEndpoint,
     hooks: {
       afterAllFileWrite: ["prettier --write"],
@@ -42,11 +32,14 @@ export function defineConfig({
     },
   };
 
+  const _documents = Array.isArray(documents) ? documents : [documents];
+
   const buildSchema: CodegenConfig = {
-    overwrite: true,
+    ...rest,
     schema: graphqlEndpoint,
     hooks: {
       afterAllFileWrite: ["prettier --write"],
+      ...rest.hooks,
     },
     generates: {
       [hooksPath]: {
@@ -55,12 +48,8 @@ export function defineConfig({
           "typescript-operations",
           "typescript-react-apollo",
         ],
-        config: {
-          withHooks,
-          withRefetchFn,
-          maybeValue,
-        },
-        documents: path.join(outPath, "**", "*.gql"),
+        config,
+        documents: [path.join(outPath, "**", "*.gql"), ..._documents],
       },
     },
   };
