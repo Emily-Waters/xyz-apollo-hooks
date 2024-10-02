@@ -40,7 +40,7 @@ export class GQLSchemaGenerator {
     );
   }
 
-  private generateQueryies() {
+  private generateQueries() {
     return this.generateOperations(RegexUtils.querySchemaRegex, "query");
   }
 
