@@ -22,7 +22,7 @@ export class GQLSchemaGenerator {
 
   public transformSchema() {
     process.stdout.write(`${chalk.yellow("❯")} Transforming schema...`);
-    this._queries = this.generateQueryies();
+    this._queries = this.generateQueries();
     this._mutations = this.generateMutations();
     this.schema = this._queries + this._mutations;
     process.stdout.write(`\r${chalk.green("✔")} Transforming schema...\n`);
