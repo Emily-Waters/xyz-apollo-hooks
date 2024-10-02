@@ -1,6 +1,6 @@
 {
   "name": "xyz-apollo-hooks",
-  "version": "2.0.4",
+  "version": "2.0.8",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsup",
@@ -13,10 +13,6 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "peerDependencies": {
-    "@apollo/client": ">=3.0.0",
-    "graphql": ">=16.0.0"
-  },
   "devDependencies": {
     "@types/chalk": "^0.4.31",
     "@types/yargs": "^17.0.33",
@@ -26,14 +22,16 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "chalk": "^5.3.0",
-    "yargs": "^17.7.2",
+    "@apollo/client": "^3.11.8",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.3.3",
     "@graphql-codegen/introspection": "4.0.3",
     "@graphql-codegen/schema-ast": "^4.1.0",
     "@graphql-codegen/typescript": "^4.0.9",
     "@graphql-codegen/typescript-operations": "^4.2.3",
-    "@graphql-codegen/typescript-react-apollo": "^4.3.2"
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
+    "chalk": "^5.3.0",
+    "graphql": "^16.6.0",
+    "yargs": "^17.7.2"
   }
 }
